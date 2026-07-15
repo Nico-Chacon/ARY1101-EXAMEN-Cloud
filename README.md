@@ -53,6 +53,7 @@ el caso Automóvil Tech: se agrega el módulo ECR, se conecta el despliegue a la
 | ManagedBy   | terraform          |
 
 ![line](deco/line.webp)
+
 ## Orden de despliegue (resumen — ver guía paso a paso completa)
 
 1. `terraform apply -target=module.ecr` → crea solo los repos ECR.
