@@ -1,14 +1,11 @@
 output "budget_monthly_name" {
-  description = "Nombre del presupuesto mensual total"
-  value       = aws_budgets_budget.monthly_total.name
+  value = var.enable_budgets ? aws_budgets_budget.monthly_total[0].name : null
 }
 
 output "budget_ec2_name" {
-  description = "Nombre del presupuesto EC2"
-  value       = aws_budgets_budget.ec2.name
+  value = var.enable_budgets ? aws_budgets_budget.ec2[0].name : null
 }
 
 output "budget_rds_name" {
-  description = "Nombre del presupuesto RDS"
-  value       = aws_budgets_budget.rds.name
+  value = var.enable_budgets ? aws_budgets_budget.rds[0].name : null
 }
