@@ -1,0 +1,24 @@
+aws_region   = "us-east-1"
+project_name = "automovil-tech"
+owner_name   = "TU_NOMBRE"
+vpc_cidr     = "10.0.0.0/16"
+
+# REEMPLAZAR: ID de tu AMI personalizada (opcional, créala desde la consola AWS)
+ami_id = ""
+
+# REEMPLAZAR: contraseña de RDS (mínimo 8 caracteres)
+db_password = "CambiaEstaPassword123!"
+
+# Deben coincidir con tienda-vehiculos-db/init.sql
+db_name     = "tienda_vehiculos"
+db_username = "admin"
+
+# Tu correo para notificaciones SNS
+email_sns = "tu_correo@duocuc.cl"
+
+app_version = "v1.0.0"
+
+# Presupuestos mensuales en USD
+monthly_budget_usd = "100"
+ec2_budget_usd     = "40"
+rds_budget_usd      = "30"
