@@ -3,6 +3,11 @@ variable "project_name" {
   type        = string
 }
 
+variable "enable_budgets" {
+  description = "Permite habilitar o deshabilitar AWS Budgets"
+  type        = bool
+  default     = false
+}
 variable "monthly_budget_usd" {
   description = "Presupuesto mensual total en USD"
   type        = string

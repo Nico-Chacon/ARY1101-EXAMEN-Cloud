@@ -4,7 +4,10 @@
 # ============================================================
 
 # Presupuesto mensual total de la cuenta
+
 resource "aws_budgets_budget" "monthly_total" {
+  count = var.enable_budgets ? 1 : 0
+
   name         = "${var.project_name}-presupuesto-mensual"
   budget_type  = "COST"
   limit_amount = var.monthly_budget_usd
@@ -13,52 +16,58 @@ resource "aws_budgets_budget" "monthly_total" {
 
   # Alerta al 60% del presupuesto
   notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 60
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "ACTUAL"
-    subscriber_sns_topic_arns  = [var.sns_topic_arn]
+    comparison_operator       = "GREATER_THAN"
+    threshold                 = 60
+    threshold_type            = "PERCENTAGE"
+    notification_type         = "ACTUAL"
+    subscriber_sns_topic_arns = [var.sns_topic_arn]
   }
 
   # Alerta al 70% del presupuesto
   notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 70
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "ACTUAL"
-    subscriber_sns_topic_arns  = [var.sns_topic_arn]
+    comparison_operator       = "GREATER_THAN"
+    threshold                 = 70
+    threshold_type            = "PERCENTAGE"
+    notification_type         = "ACTUAL"
+    subscriber_sns_topic_arns = [var.sns_topic_arn]
   }
 
-  # Alerta al 80% del presupuesto — señal de acción inmediata
+  # Alerta al 80% del presupuesto
   notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 80
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "ACTUAL"
-    subscriber_sns_topic_arns  = [var.sns_topic_arn]
+    comparison_operator       = "GREATER_THAN"
+    threshold                 = 80
+    threshold_type            = "PERCENTAGE"
+    notification_type         = "ACTUAL"
+    subscriber_sns_topic_arns = [var.sns_topic_arn]
   }
 
-  # Alerta al 100% — gasto superado
+  # Alerta al 100%
   notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 100
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "ACTUAL"
-    subscriber_sns_topic_arns  = [var.sns_topic_arn]
+    comparison_operator       = "GREATER_THAN"
+    threshold                 = 100
+    threshold_type            = "PERCENTAGE"
+    notification_type         = "ACTUAL"
+    subscriber_sns_topic_arns = [var.sns_topic_arn]
   }
 
-  # Alerta predictiva: si se proyecta superar el 100%
+  # Alerta predictiva
   notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 100
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "FORECASTED"
-    subscriber_sns_topic_arns  = [var.sns_topic_arn]
+    comparison_operator       = "GREATER_THAN"
+    threshold                 = 100
+    threshold_type            = "PERCENTAGE"
+    notification_type         = "FORECASTED"
+    subscriber_sns_topic_arns = [var.sns_topic_arn]
   }
 }
 
-# Presupuesto específico para EC2 (mayor consumidor de costos)
+
+# ============================================================
+# Presupuesto específico EC2
+# ============================================================
+
 resource "aws_budgets_budget" "ec2" {
+  count = var.enable_budgets ? 1 : 0
+
   name         = "${var.project_name}-presupuesto-ec2"
   budget_type  = "COST"
   limit_amount = var.ec2_budget_usd
@@ -71,16 +80,22 @@ resource "aws_budgets_budget" "ec2" {
   }
 
   notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 80
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "ACTUAL"
-    subscriber_sns_topic_arns  = [var.sns_topic_arn]
+    comparison_operator       = "GREATER_THAN"
+    threshold                 = 80
+    threshold_type            = "PERCENTAGE"
+    notification_type         = "ACTUAL"
+    subscriber_sns_topic_arns = [var.sns_topic_arn]
   }
 }
 
-# Presupuesto específico para RDS
+
+# ============================================================
+# Presupuesto específico RDS
+# ============================================================
+
 resource "aws_budgets_budget" "rds" {
+  count = var.enable_budgets ? 1 : 0
+
   name         = "${var.project_name}-presupuesto-rds"
   budget_type  = "COST"
   limit_amount = var.rds_budget_usd
@@ -93,10 +108,10 @@ resource "aws_budgets_budget" "rds" {
   }
 
   notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 80
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "ACTUAL"
-    subscriber_sns_topic_arns  = [var.sns_topic_arn]
+    comparison_operator       = "GREATER_THAN"
+    threshold                 = 80
+    threshold_type            = "PERCENTAGE"
+    notification_type         = "ACTUAL"
+    subscriber_sns_topic_arns = [var.sns_topic_arn]
   }
 }
