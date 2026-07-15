@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "automoviltech-tfstate-CAMBIAR"
+    bucket         = "chacon-automoviltech-tfstate"
     key            = "dev/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "automoviltech-tflocks-CAMBIAR"
+    use_lockfile   = true
     encrypt        = true
   }
 }
