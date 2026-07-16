@@ -28,6 +28,12 @@ variable "ami_id" {
   default     = ""
 }
 
+variable "key_name" {
+  description = "Nombre del Key Pair EC2 (créalo en la consola AWS antes del apply)"
+  type        = string
+  default     = "Examen-cloud"
+}
+
 variable "db_password" {
   description = "Contraseña para RDS MySQL (pásala vía TF_VAR_db_password, NUNCA la commitees)"
   type        = string

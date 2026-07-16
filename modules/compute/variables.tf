@@ -29,6 +29,12 @@ variable "ami_id" {
   default     = ""
 }
 
+variable "key_name" {
+  description = "Nombre del Key Pair EC2 para acceso SSH (creado manualmente en la consola AWS)"
+  type        = string
+  default     = "Examen-cloud"
+}
+
 variable "app_version" {
   description = "Versión de la aplicación"
   type        = string
@@ -74,4 +80,10 @@ variable "ecr_frontend_repo_url" {
 variable "ecr_backend_repo_url" {
   description = "URL del repositorio ECR del backend"
   type        = string
+}
+
+variable "db_init_sql_b64" {
+  description = "Contenido de init.sql codificado en base64 (para cargarlo automáticamente al arrancar)"
+  type        = string
+  sensitive   = true
 }

@@ -79,6 +79,7 @@ module "compute" {
   target_group_arn = module.loadbalancer.target_group_arn
   ec2_sg_id        = module.security.ec2_sg_id
   ami_id           = var.ami_id
+  key_name         = var.key_name
   app_version      = var.app_version
 
   aws_region            = var.aws_region
@@ -87,6 +88,7 @@ module "compute" {
   db_user               = module.database.db_username
   db_password           = var.db_password
   db_name               = module.database.db_name
+  db_init_sql_b64       = base64encode(file("${path.module}/../../app/tienda-vehiculos-db/init.sql"))
   ecr_frontend_repo_url = module.ecr.frontend_repo_url
   ecr_backend_repo_url  = module.ecr.backend_repo_url
 }

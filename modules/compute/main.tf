@@ -17,6 +17,7 @@ resource "aws_launch_template" "web" {
   name          = "${var.project_name}-lt"
   image_id      = var.ami_id != "" ? var.ami_id : data.aws_ami.amazon_linux_2.id
   instance_type = "t3.small"
+  key_name      = var.key_name != "" ? var.key_name : null
 
   iam_instance_profile {
     name = "LabInstanceProfile"
@@ -43,6 +44,7 @@ resource "aws_launch_template" "web" {
     db_user         = var.db_user
     db_password     = var.db_password
     db_name         = var.db_name
+    db_init_sql_b64 = var.db_init_sql_b64
     frontend_image  = "${var.ecr_frontend_repo_url}:latest"
     backend_image   = "${var.ecr_backend_repo_url}:latest"
   }))
