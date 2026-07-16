@@ -8,6 +8,7 @@ on:
       - '**/*.tf'
       - '**/*.tfvars'
       - '**/.terraform.lock.hcl'
+      - 'app/**'
   workflow_dispatch:
 
 env:
@@ -38,14 +39,28 @@ jobs:
       - name: Terraform Init
         working-directory: ./environments/dev
         run: terraform init -input=false
-
+      
       - name: Terraform Validate
         working-directory: ./environments/dev
         run: terraform validate
-
+      
       - name: Terraform Format Check
         working-directory: ./environments/dev
         run: terraform fmt -check -recursive
+      
+      - name: Create ECR repositories
+        working-directory: ./environments/dev
+        run: terraform apply -auto-approve -target=module.ecr
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      
+      - name: Build & Push Docker Images
+        working-directory: ./app
+        run: |
+          chmod +x build-and-push.sh
+          ./build-and-push.sh
 
       - name: Terraform Plan
         working-directory: ./environments/dev
