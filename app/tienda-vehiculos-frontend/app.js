@@ -10,7 +10,7 @@ const API_BASE_URL = (() => {
     return "http://localhost:3001/api";
   }
   // EC2 u otro host: mismo hostname con puerto 3001
-  return `http://${host}:3001/api`;
+  return `/api`;
 })();
 
 const VEHICULOS_URL = `${API_BASE_URL}/vehiculos`;

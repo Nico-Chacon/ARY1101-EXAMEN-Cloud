@@ -31,7 +31,6 @@ resource "aws_db_instance" "mysql" {
   maintenance_window      = "mon:04:00-mon:05:00"
 
   skip_final_snapshot       = true
-  final_snapshot_identifier = "${var.project_name}-final-snapshot"
 
   enabled_cloudwatch_logs_exports = ["error", "general", "slowquery"]
 

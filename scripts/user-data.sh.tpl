@@ -42,10 +42,16 @@ services:
       - "80:80"
     restart: always
     depends_on:
-      - backend
+      - backend:
+        condition: service_healthy
 
   backend:
     image: ${backend_image}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
     container_name: tienda-vehiculos-backend
     environment:
       DB_HOST: "${db_host}"
@@ -56,6 +62,7 @@ services:
     ports:
       - "3001:3001"
     restart: always
+    
 COMPOSEEOF
 
 chown -R ec2-user:ec2-user /home/ec2-user/app
