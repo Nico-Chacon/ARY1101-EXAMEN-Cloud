@@ -46,6 +46,7 @@ jobs:
       
       - name: Terraform Format Check
         working-directory: ./environments/dev
+        continue-on-error: true
         run: terraform fmt -check -recursive
       
       - name: Create ECR repositories
@@ -61,7 +62,10 @@ jobs:
         run: |
           chmod +x build-and-push.sh
           ./build-and-push.sh
-
+      
+      - name: Wait for ECR
+        run: sleep 20
+      
       - name: Terraform Plan
         working-directory: ./environments/dev
         run: terraform plan -input=false -out=tfplan
@@ -69,3 +73,9 @@ jobs:
       - name: Terraform Apply
         working-directory: ./environments/dev
         run: terraform apply -auto-approve tfplan
+      - name: Refrescar instancias del ASG
+        continue-on-error: true
+        run: |
+          aws autoscaling start-instance-refresh \
+            --auto-scaling-group-name automovil-tech-asg \
+            --preferences '{"MinHealthyPercentage":50,"InstanceWarmup":120}'

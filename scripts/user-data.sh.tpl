@@ -61,7 +61,9 @@ COMPOSEEOF
 chown -R ec2-user:ec2-user /home/ec2-user/app
 
 # Pull explícito (útil para ver el log si algo falla) + arranque
-docker-compose pull
-docker-compose up -d
+docker-compose pull || exit 1
+docker-compose up -d || exit 1
+
+docker ps -a
 
 echo "Automovil Tech user-data setup completed successfully"
